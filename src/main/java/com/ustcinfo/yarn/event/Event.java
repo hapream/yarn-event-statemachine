@@ -14,5 +14,6 @@ public interface Event<TYPE extends Enum<TYPE>> {
 
 	long getTimestamp();
 
+	@Override
 	String toString();
 }

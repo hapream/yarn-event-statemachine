@@ -9,7 +9,7 @@ package com.ustcinfo.yarn.event;
  */
 public class SimpleMRAppMasterTest {
 	
-	@SuppressWarnings("unchecked")
+
 	public static void main(String[] args) {
 		String jobId = "job_20131211_12";
 		SimpleMRAppMaster appMaster = new SimpleMRAppMaster("Simple MRAppMaster", jobId, 5);

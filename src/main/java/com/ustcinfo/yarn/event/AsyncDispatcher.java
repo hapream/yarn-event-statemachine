@@ -115,7 +115,7 @@ public class AsyncDispatcher extends CompositeService implements Dispatcher {
 	@Override
 	public void register(Class<? extends Enum> eventType, EventHandler handler) {
 		/* check to see if we have a listener registered */
-		EventHandler<Event> registeredHandler = (EventHandler<Event>) eventDispatchers
+		EventHandler registeredHandler = (EventHandler) eventDispatchers
 				.get(eventType);
 		LOGGER.info("Registering " + eventType + " for " + handler.getClass());
 		if (registeredHandler == null) {
@@ -141,7 +141,8 @@ public class AsyncDispatcher extends CompositeService implements Dispatcher {
 		return new GenericEventHandler();
 	}
 
-	class GenericEventHandler implements EventHandler<Event> {
+	class GenericEventHandler implements EventHandler<Event<?>> {
+		@Override
 		public void handle(Event event) {
 			/* all this method does is enqueue all the events onto the queue */
 			int qSize = eventQueue.size();
@@ -171,21 +172,21 @@ public class AsyncDispatcher extends CompositeService implements Dispatcher {
 	 * @param <T>
 	 *            the type of event these multiple handlers are interested in.
 	 */
-	static class MultiListenerHandler implements EventHandler<Event> {
-		List<EventHandler<Event>> listofHandlers;
+	static class MultiListenerHandler implements EventHandler {
+		List<EventHandler> listofHandlers;
 
 		public MultiListenerHandler() {
-			listofHandlers = new ArrayList<EventHandler<Event>>();
+			listofHandlers = new ArrayList<EventHandler>();
 		}
 
 		@Override
 		public void handle(Event event) {
-			for (EventHandler<Event> handler : listofHandlers) {
+			for (EventHandler handler : listofHandlers) {
 				handler.handle(event);
 			}
 		}
 
-		void addHandler(EventHandler<Event> handler) {
+		void addHandler(EventHandler handler) {
 			listofHandlers.add(handler);
 		}
 

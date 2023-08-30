@@ -38,6 +38,7 @@ public class CompositeService extends AbstractService {
 		return serviceList.remove(service);
 	}
 
+	@Override
 	public synchronized void init(/*Configuration conf*/) {
 		for (Service service : serviceList) {
 			service.init();
@@ -45,6 +46,7 @@ public class CompositeService extends AbstractService {
 		super.init();
 	}
 
+	@Override
 	public synchronized void start() {
 		int i = 0;
 		try {
@@ -61,6 +63,7 @@ public class CompositeService extends AbstractService {
 
 	}
 
+	@Override
 	public synchronized void stop() {
 		if (this.getServiceState() == STATE.STOPPED) {
 			// The base composite-service is already stopped, don't do anything
